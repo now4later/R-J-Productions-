@@ -13,9 +13,13 @@ module.exports = async (req, res) => {
       name,
       email,
       phone,
+      business,
+      type,
       inquiryType,
       message
     } = req.body || {};
+
+    const finalInquiryType = inquiryType || type || "General Information";
 
     if (!name || !email || !message) {
       return res.status(400).json({
@@ -37,14 +41,15 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: process.env.INQUIRY_TO_EMAIL || process.env.SMTP_USER,
-      subject: `R&J Productions Inquiry: ${inquiryType || "General Information"}`,
+      subject: `R&J Productions Inquiry: ${finalInquiryType}`,
       text: [
         "R&J PRODUCTIONS WEBSITE INQUIRY",
         "",
         `Name: ${name}`,
         `Email: ${email}`,
         `Phone: ${phone || "Not provided"}`,
-        `Inquiry Type: ${inquiryType || "General Information"}`,
+        `Business Name: ${business || "Not provided"}`,
+        `Inquiry Type: ${finalInquiryType}`,
         "",
         "Message:",
         message
