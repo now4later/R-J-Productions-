@@ -1028,10 +1028,8 @@
     <section class="section" id="blue-room">
       <div class="wrap">
         <div class="venue-panel reveal">
-          <div class="ph venue-photo">
-            <div class="ph-label">
-              <b>The Blue Room</b>
-              [ADD PHOTO — client-supplied Blue Room photo]
+          <div class="venue-photo">
+              <img src="/images/blue-room-1.jpg" alt="Live R&J Playerz performance at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);">
             </div>
           </div>
 
@@ -1415,23 +1413,17 @@
         { title: "R&J Summer Concert Series", status: "Past Event" },
         { title: "R&J Summer Concert Series", status: "Past Event" }
       ],
-
       photoHighlights: [
-        "Live Performance",
-        "Live Performance",
-        "Community Moment",
-        "On Stage"
+        { label: "The Blue Room — Live Performance", src: "/images/blue-room-1.jpg" },
+        { label: "The Blue Room — R&J Playerz", src: "/images/blue-room-2.jpg" }
       ],
-
       videos: [
         { youtubeId: "ItvTh4dFSbU", title: "R&J Productions Live Performance" },
         { youtubeId: "fKdn-YomqRQ", title: "R&J Productions Live Performance" },
         { youtubeId: "fZ5HCKr_49E", title: "R&J Productions Live Performance" }
       ],
-
-      youtubeChannel: "" // Add the real YouTube channel URL here.
+      youtubeChannel: ""
     };
-
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
@@ -1571,28 +1563,25 @@
       document.body.classList.remove("menu-open");
     }
 
-    function openLightbox(label) {
-      lightboxLabel.innerHTML = `<b>${label}</b>[ADD PHOTO]`;
+    function openLightbox(photo) {
+      lightboxLabel.innerHTML = `<img src="${photo.src}" alt="${photo.label}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:var(--radius);"><b style="display:block;margin-top:12px;">${photo.label}</b>`;
       lightbox.hidden = false;
       lightboxClose.focus();
     }
 
-    SITE_DATA.photoHighlights.forEach(label => {
+    SITE_DATA.photoHighlights.forEach(photo => {
       const tile = document.createElement("button");
       tile.className = "tile";
       tile.type = "button";
-      tile.setAttribute("aria-label", `Open ${label} photo`);
+      tile.setAttribute("aria-label", `Open ${photo.label} photo`);
 
       tile.innerHTML = `
-        <div class="ph">
-          <div class="ph-label">
-            <b>${label}</b>
-            [ADD PHOTO]
-          </div>
+        <div class="ph" style="min-height:0;aspect-ratio:16/10;border:0;">
+          <img src="${photo.src}" alt="${photo.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
         </div>
       `;
 
-      tile.addEventListener("click", () => openLightbox(label));
+      tile.addEventListener("click", () => openLightbox(photo));
       highlights.appendChild(tile);
     });
 
