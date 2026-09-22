@@ -740,9 +740,12 @@
     .about-mark {
       color: var(--gold);
       font-family: "Anton", sans-serif;
-      font-size: 5rem;
-      line-height: .8;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: .9;
+      white-space: nowrap;
     }
+
+    .about-mark span { color: var(--text); }
 
     .about-wrap p {
       max-width: 65ch;
@@ -1256,7 +1259,7 @@
     <section class="section band-dark" id="about">
       <div class="wrap">
         <div class="about-wrap">
-          <div class="about-mark reveal">R&amp;J</div>
+          <div class="about-mark reveal">R&amp;J <span>PRODUCTIONS</span></div>
           <div class="reveal">
             <div class="eyebrow">ABOUT R&amp;J PRODUCTIONS</div>
             <p>
