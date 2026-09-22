@@ -184,6 +184,8 @@
       font-size: .82rem;
     }
 
+    .menu-toggle { display: none; }
+
     .menu-btn {
       display: none;
       border: 0;
@@ -899,11 +901,16 @@
         transition: transform .25s ease, visibility .25s ease, opacity .25s ease;
       }
 
-      .nav-links.open {
-        transform: translateX(0) !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
+      .menu-toggle:checked ~ .nav-links {
+        transform: translateX(0);
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .menu-toggle:checked + .menu-btn {
+        position: relative;
+        z-index: 1002;
       }
 
       .menu-btn {
@@ -913,6 +920,7 @@
         min-height: 48px;
         padding: 8px;
         cursor: pointer;
+        text-align: center;
       }
 
       .nav-links li {
@@ -995,14 +1003,8 @@
         R&J <span>PRODUCTIONS</span>
       </a>
 
-      <button
-        class="menu-btn"
-        id="menuBtn"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="navLinks"
-      >☰</button>
+      <input class="menu-toggle" id="menuToggle" type="checkbox" aria-label="Toggle navigation">
+      <label class="menu-btn" for="menuToggle" aria-label="Open menu">☰</label>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#top">Home</a></li>
@@ -1446,24 +1448,12 @@
       );
     }
 
-    function closeMenu() {
-      navLinks.classList.remove("open");
-      document.body.classList.remove("menu-open");
-      menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "Open menu");
-    }
-
-    function toggleMenu() {
-      const open = !navLinks.classList.contains("open");
-      navLinks.classList.toggle("open", open);
-      document.body.classList.toggle("menu-open", open);
-      menuBtn.setAttribute("aria-expanded", String(open));
-      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-      updateHeaderHeight();
-    }
-
-    menuBtn.addEventListener("click", toggleMenu);
-    $$("#navLinks a").forEach(link => link.addEventListener("click", closeMenu));
+    $("#navLinks a").forEach(link => {
+      link.addEventListener("click", () => {
+        const toggle = $("#menuToggle");
+        if (toggle) toggle.checked = false;
+      });
+    });
     window.addEventListener("resize", updateHeaderHeight);
     window.addEventListener("load", updateHeaderHeight);
     updateHeaderHeight();
