@@ -1068,7 +1068,23 @@
             Click a tile to preview it.
           </p>
         </div>
-        <div class="highlights-grid" id="highlights"></div>
+        <div class="highlights-grid" id="highlights">
+          <article class="tile">
+            <div class="ph" style="background:#090812;">
+              <img src="/20260911_203009_35e3a805-3b23-4843-a985-73423177e756.jpeg" alt="R&J Playerz performing live at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">
+            </div>
+          </article>
+          <article class="tile">
+            <div class="ph" style="background:#090812;">
+              <img src="/20260911_203535_6744862a-56d2-4080-89c8-53460268e806.jpeg" alt="R&J Playerz live performance" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">
+            </div>
+          </article>
+          <article class="tile">
+            <div class="ph" style="background:#090812;">
+              <img src="/Messenger_creation_D827BE4B-2FF7-44CC-A9E3-DC6F17AE98DA.jpeg" alt="R&J Productions live at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1096,7 +1112,26 @@
           <p>Real performances from R&amp;J Productions concerts, straight from YouTube.</p>
         </div>
 
-        <div class="video-grid" id="videoGrid"></div>
+        <div class="video-grid" id="videoGrid">
+          <article class="video-tile">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/ItvTh4dFSbU" title="R&J Productions Live Performance" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-title">R&J Productions Live Performance</div>
+          </article>
+          <article class="video-tile">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/fKdn-YomqRQ" title="R&J Productions Live Performance" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-title">R&J Productions Live Performance</div>
+          </article>
+          <article class="video-tile">
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/fZ5HCKr_49E" title="R&J Productions Live Performance" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="video-title">R&J Productions Live Performance</div>
+          </article>
+        </div>
 
       </div>
     </section>
@@ -1506,20 +1541,13 @@
     }
 
 
-    SITE_DATA.photoHighlights.forEach(photo => {
-      const tile = document.createElement("article");
-      tile.className = "tile reveal";
-      tile.innerHTML = `
-        <div class="ph" style="background:#090812;">
-          <img src="${photo.src}" alt="${photo.label}" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">
-        </div>
-      `;
-      tile.addEventListener("click", () => openLightbox(photo));
-      highlights.appendChild(tile);
-      revealObserver.observe(tile);
-    });
+    // Gallery photos are rendered directly in HTML so they remain visible even if scripts are delayed.\n\n    lightboxClose.addEventListener("click", closeLightbox);
 
-    lightboxClose.addEventListener("click", closeLightbox);
+    highlights.addEventListener("click", event => {
+      const img = event.target.closest("img");
+      if (!img) return;
+      openLightbox({ src: img.src, label: img.alt });
+    });
 
     lightbox.addEventListener("click", event => {
       if (event.target === lightbox) closeLightbox();
