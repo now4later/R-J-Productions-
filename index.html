@@ -184,8 +184,6 @@
       font-size: .82rem;
     }
 
-    .menu-toggle { display: none; }
-
     .menu-btn {
       display: none;
       border: 0;
@@ -878,71 +876,49 @@
 
     /* Responsive */
     @media (max-width: 980px) {
-      .menu-btn { display: block; }
+      .menu-btn,
+      .menu-toggle {
+        display: none;
+      }
+
+      .nav {
+        overflow: hidden;
+      }
 
       .nav-links {
-        position: fixed;
-        top: 68px;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1001;
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 24px;
-        overflow-y: auto;
-        background: var(--bg);
-        transform: translateX(100%);
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-        transition: transform .25s ease, visibility .25s ease, opacity .25s ease;
+        align-items: center;
+        gap: 16px;
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 8px 0;
       }
 
-      .menu-toggle:checked ~ .nav-links {
-        transform: translateX(0);
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .menu-toggle:checked + .menu-btn {
-        position: relative;
-        z-index: 1002;
-      }
-
-      .menu-btn {
-        position: relative;
-        z-index: 1002;
-        min-width: 48px;
-        min-height: 48px;
-        padding: 8px;
-        cursor: pointer;
-        text-align: center;
+      .nav-links::-webkit-scrollbar {
+        display: none;
       }
 
       .nav-links li {
-        border-bottom: 1px solid var(--line);
-      }
-
-      .nav-links li:last-child {
-        margin-top: 18px;
-        border-bottom: 0;
+        flex: 0 0 auto;
       }
 
       .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 16px 4px;
-        font-size: 1.05rem;
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 8px 4px;
+        font-size: .82rem;
       }
 
       .nav-links .nav-cta {
         display: inline-flex;
         width: auto;
-        padding: 14px 26px;
+        padding: 10px 16px;
       }
 
       .video-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1003,8 +979,7 @@
         R&J <span>PRODUCTIONS</span>
       </a>
 
-      <input class="menu-toggle" id="menuToggle" type="checkbox" aria-label="Toggle navigation">
-      <label class="menu-btn" for="menuToggle" aria-label="Open menu">☰</label>
+      <span class="menu-btn" aria-hidden="true">☰</span>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#top">Home</a></li>
