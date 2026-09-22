@@ -1136,7 +1136,7 @@
 
             <div class="support-actions">
               <button class="btn btn-gold placeholder-action" type="button">Become a Sponsor</button>
-              <button class="btn btn-outline placeholder-action" type="button">Make a Donation</button>
+              <a class="btn btn-gold" id="donationLink" href="#" target="_blank" rel="noopener noreferrer">Make a Donation</a>
             </div>
           </div>
 
@@ -1436,11 +1436,15 @@
     $$(".reveal").forEach(element => revealObserver.observe(element));
 
     // Generic placeholder actions
-    $$(".placeholder-action, .footer-placeholder").forEach(button => {
+    $(".placeholder-action, .footer-placeholder").forEach(button => {
       button.addEventListener("click", () => {
         alert("This feature will be connected once the real sponsor, donation, or social-media information is provided.");
       });
     });
+
+    // Donation link — replace this URL with the official R&J Productions donation link.
+    const donationLink = $("#donationLink");
+    donationLink.href = "#";
 
     // Forms — send real inquiries to the Vercel serverless email endpoint.
     async function setupLiveForm(formId, successId) {
