@@ -1106,20 +1106,6 @@
             </p>
             <a href="#videos" class="btn btn-coral">Watch the Band</a>
 
-            <div class="lineup">
-              <div>
-                <div class="ph"><div class="ph-label">[ADD PHOTO]</div></div>
-                <div class="lineup-name">[ADD PERFORMER NAME]</div>
-              </div>
-              <div>
-                <div class="ph"><div class="ph-label">[ADD PHOTO]</div></div>
-                <div class="lineup-name">[ADD PERFORMER NAME]</div>
-              </div>
-              <div>
-                <div class="ph"><div class="ph-label">[ADD PHOTO]</div></div>
-                <div class="lineup-name">Featured Vocalist — [ADD NAME]</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -1416,7 +1402,11 @@
         { title: "R&J Summer Concert Series", status: "Past Event" },
         { title: "R&J Summer Concert Series", status: "Past Event" }
       ],
-      photoHighlights: [],
+      photoHighlights: [
+        { src: "/rj-live-blue-1.jpg", label: "R&J Playerz performing live at The Blue Room" },
+        { src: "/rj-live-blue-2.jpg", label: "R&J Playerz live performance" },
+        { src: "/rj-live-blue-3.jpg", label: "R&J Productions live at The Blue Room" }
+      ],
       videos: [
         { youtubeId: "ItvTh4dFSbU", title: "R&J Productions Live Performance" },
         { youtubeId: "fKdn-YomqRQ", title: "R&J Productions Live Performance" },
@@ -1565,6 +1555,19 @@
       lightboxClose.focus();
     }
 
+
+    SITE_DATA.photoHighlights.forEach(photo => {
+      const tile = document.createElement("article");
+      tile.className = "tile reveal";
+      tile.innerHTML = `
+        <div class="ph">
+          <img src="${photo.src}" alt="${photo.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+      `;
+      tile.addEventListener("click", () => openLightbox(photo));
+      highlights.appendChild(tile);
+      revealObserver.observe(tile);
+    });
 
     lightboxClose.addEventListener("click", closeLightbox);
 
