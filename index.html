@@ -880,8 +880,11 @@
 
       .nav-links {
         position: fixed;
-        inset: var(--header-height) 0 0;
-        z-index: 99;
+        top: 68px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -891,12 +894,25 @@
         background: var(--bg);
         transform: translateX(100%);
         visibility: hidden;
-        transition: transform .25s ease, visibility .25s ease;
+        opacity: 0;
+        pointer-events: none;
+        transition: transform .25s ease, visibility .25s ease, opacity .25s ease;
       }
 
       .nav-links.open {
         transform: translateX(0);
         visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .menu-btn {
+        position: relative;
+        z-index: 1002;
+        min-width: 48px;
+        min-height: 48px;
+        padding: 8px;
+        cursor: pointer;
       }
 
       .nav-links li {
