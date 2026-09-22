@@ -900,10 +900,10 @@
       }
 
       .nav-links.open {
-        transform: translateX(0);
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
+        transform: translateX(0) !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
       }
 
       .menu-btn {
@@ -1002,6 +1002,7 @@
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="navLinks"
+        onclick="document.getElementById('navLinks').classList.toggle('open'); document.body.classList.toggle('menu-open'); this.setAttribute('aria-expanded', document.getElementById('navLinks').classList.contains('open'));"
       >☰</button>
 
       <ul class="nav-links" id="navLinks">
