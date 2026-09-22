@@ -1037,21 +1037,6 @@
       </div>
     </section>
 
-    <section class="section band-dark" id="past">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div class="eyebrow">PAST EVENTS</div>
-          <h2>The concert archive.</h2>
-          <p>
-            R&amp;J Productions has hosted four free outdoor Summer Concert Series events.
-            Exact dates and locations can be added as they are confirmed.
-          </p>
-        </div>
-
-        <div class="past-grid" id="pastGrid"></div>
-      </div>
-    </section>
-
     <section class="section" id="blue-room">
       <div class="wrap">
         <div class="venue-panel reveal">
@@ -1363,7 +1348,6 @@
             <h4>Explore</h4>
             <ul>
               <li><a href="#concerts">Upcoming Concerts</a></li>
-              <li><a href="#past">Past Events</a></li>
               <li><a href="#blue-room">The Blue Room</a></li>
               <li><a href="#gallery">Photo Gallery</a></li>
               <li><a href="#band">The R&amp;J Playerz</a></li>
@@ -1410,12 +1394,6 @@
       provides the real assets and details.
     */
     const SITE_DATA = {
-      pastEvents: [
-        { title: "R&J Summer Concert Series", status: "Past Event", image: "/blue-room-1.jpg", imageAlt: "R&J Playerz performing live at The Blue Room" },
-        { title: "R&J Summer Concert Series", status: "Past Event", image: "/blue-room-2.jpg", imageAlt: "R&J Playerz performing live at The Blue Room" },
-        { title: "R&J Summer Concert Series", status: "Past Event", image: "/rj-live-blue-1.jpg", imageAlt: "R&J Playerz performing live at The Blue Room" },
-        { title: "R&J Summer Concert Series", status: "Past Event", image: "/rj-live-blue-2.jpg", imageAlt: "R&J Playerz performing live at The Blue Room" }
-      ],
       photoHighlights: [
         { src: "/rj-live-blue-1.jpg", label: "R&J Playerz performing live at The Blue Room" },
         { src: "/rj-live-blue-2.jpg", label: "R&J Playerz live performance" },
@@ -1528,30 +1506,6 @@
     setupLiveForm("vendorForm", "vendorSuccess");
     setupLiveForm("contactForm", "contactSuccess");
 
-    // Past events
-    const pastGrid = $("#pastGrid");
-
-    SITE_DATA.pastEvents.forEach((event, index) => {
-      const card = document.createElement("article");
-      card.className = "past-card reveal";
-
-      card.innerHTML = `
-        <div class="ph">
-          ${event.image
-            ? `<img src="${event.image}" alt="${event.imageAlt || event.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">`
-            : `<div class="ph-label"><b>Event Photo ${index + 1}</b>[ADD PHOTO]</div>`}
-        </div>
-        <div class="past-body">
-          <h3>${event.title}</h3>
-          <div class="past-meta">${event.status}</div>
-          <p class="past-quote">"An unforgettable night of live music, community, food, and fun."</p>
-        </div>
-      `;
-
-      pastGrid.appendChild(card);
-      revealObserver.observe(card);
-    });
-
     // Gallery + lightbox
     const highlights = $("#highlights");
     const lightbox = $("#lightbox");
@@ -1574,8 +1528,8 @@
       const tile = document.createElement("article");
       tile.className = "tile reveal";
       tile.innerHTML = `
-        <div class="ph">
-          <img src="${photo.src}" alt="${photo.label}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="ph" style="background:#090812;">
+          <img src="${photo.src}" alt="${photo.label}" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">
         </div>
       `;
       tile.addEventListener("click", () => openLightbox(photo));
