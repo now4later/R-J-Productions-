@@ -1,0 +1,45 @@
+name: Install form scroll fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'scroll-fix.js'
+      - '.github/workflows/install-scroll-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add scroll fix script to page
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          tag = '<script src="/scroll-fix.js" defer></script>'
+          if tag not in s:
+              marker = '</body>'
+              if marker not in s:
+                  raise SystemExit('Could not find </body> in index.html')
+              s = s.replace(marker, f'  {tag}\n{marker}', 1)
+              p.write_text(s, encoding='utf-8')
+          else:
+              print('Scroll fix already installed.')
+          PY
+      - name: Commit page update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if git diff --cached --quiet; then
+            echo 'No changes needed.'
+          else
+            git commit -m 'Install robust form scroll restoration'
+            git push
+          fi
