@@ -1,6 +1,12 @@
 {
-"private": true,
-"dependencies": {
-"nodemailer": "^6.9.16"
-}
+  "private": true,
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
 }
