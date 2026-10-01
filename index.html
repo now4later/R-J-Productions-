@@ -135,5 +135,6 @@ setupLiveForm("vendorForm","vendorSuccess");setupLiveForm("contactForm","contact
     const videoGrid=$("#videoGrid"); SITE_DATA.videos.forEach(video=>{const tile=document.createElement("article");tile.className="video-tile reveal";const frame=document.createElement("div");frame.className="video-frame";const iframe=document.createElement("iframe");iframe.src=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.youtubeId)}`;iframe.title=video.title;iframe.loading="lazy";iframe.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";iframe.setAttribute("allowfullscreen","");const title=document.createElement("div");title.className="video-title";title.textContent=video.title;frame.appendChild(iframe);tile.append(frame,title);videoGrid.appendChild(tile);revealObserver.observe(tile)});
     const youtubeLink=$("#youtubeLink"); if(youtubeLink){if(SITE_DATA.youtubeChannel){youtubeLink.href=SITE_DATA.youtubeChannel}else{youtubeLink.addEventListener("click",event=>{event.preventDefault();alert("Add the official R&J Productions YouTube channel URL in SITE_DATA.youtubeChannel.")})}}
   </script>
+  <script src="/scroll-fix.js" defer></script>
 </body>
 </html>
