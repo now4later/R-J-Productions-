@@ -1,0 +1,36 @@
+name: Remove Najee Featured Artist
+
+on:
+  push:
+    paths-ignore:
+      - '.github/workflows/remove-najee.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+
+      - name: Remove featured artist label
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          old = '<div class="past-links"><span style="color:var(--gold);font-size:.85rem;font-weight:700;">Featured artist: Najee</span></div>'
+          html = html.replace(old, '', 1)
+          path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Commit website update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Remove featured artist label"
+          git push
