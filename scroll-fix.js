@@ -29,11 +29,20 @@
     } catch (_) {}
   }
 
+  function removeSponsorButton() {
+    const button = document.querySelector('.placeholder-action');
+    if (button) button.remove();
+  }
+
   document.addEventListener('submit', savePosition, true);
   window.addEventListener('pageshow', restoreOnLoad);
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', restoreOnLoad, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      restoreOnLoad();
+      removeSponsorButton();
+    }, { once: true });
   } else {
     restoreOnLoad();
+    removeSponsorButton();
   }
 })();
