@@ -1,0 +1,99 @@
+name: Fix form scroll position
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch-form-scroll:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Patch form submission scroll behavior
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          start_marker = 'async function setupLiveForm'
+          end_marker = 'setupLiveForm("vendorForm"'
+          start = text.index(start_marker)
+          end = text.index(end_marker, start)
+
+          replacement = r'''async function setupLiveForm(formId, successId) {
+            const form = document.getElementById(formId);
+            const success = document.getElementById(successId);
+            const submitButton = form.querySelector('button[type="submit"]');
+            const defaultButtonText = submitButton.textContent;
+
+            form.addEventListener("submit", async event => {
+              event.preventDefault();
+
+              // Keep the visitor anchored to the form while the async request
+              // completes. This prevents the page from jumping back to the hero
+              // when the success message is shown or the form is reset.
+              const savedScrollY = window.scrollY;
+              const restoreScrollPosition = () => {
+                requestAnimationFrame(() => {
+                  window.scrollTo(0, savedScrollY);
+                  requestAnimationFrame(() => window.scrollTo(0, savedScrollY));
+                });
+              };
+
+              success.classList.remove("show");
+              submitButton.disabled = true;
+              submitButton.textContent = "Sending...";
+
+              try {
+                const payload = Object.fromEntries(new FormData(form).entries());
+                const response = await fetch("/api/inquiry", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload)
+                });
+
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                  throw new Error(result.error || "We could not send your inquiry.");
+                }
+
+                success.textContent = result.message || "Thanks — your inquiry was sent successfully. R&J Productions will get back to you soon.";
+                success.classList.add("show");
+                form.reset();
+                restoreScrollPosition();
+              } catch (error) {
+                restoreScrollPosition();
+                alert(error.message || "Something went wrong. Please try again or contact R&J Productions directly.");
+              } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = defaultButtonText;
+                restoreScrollPosition();
+              }
+            });
+          }
+
+          '''
+
+          path.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
+          PY
+
+      - name: Commit and push fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No change needed."
+          else
+            git commit -m "Fix form scroll position after submit [skip ci]"
+            git push origin main
+          fi
