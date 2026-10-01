@@ -19,6 +19,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
@@ -28,35 +29,35 @@ jobs:
           start = text.index(start_marker)
           end = text.index(end_marker, start)
 
-          replacement = r"""async function setupLiveForm(formId, successId) {
+          replacement = r'''async function setupLiveForm(formId, successId) {
             const form = document.getElementById(formId);
             const success = document.getElementById(successId);
-            const submitButton = form.querySelector('button[type=\"submit\"]');
+            const submitButton = form.querySelector('button[type="submit"]');
             const defaultButtonText = submitButton.textContent;
 
-            form.addEventListener(\"submit\", async event => {
+            form.addEventListener("submit", async event => {
               event.preventDefault();
               const savedScrollY = window.scrollY;
               const restoreScrollPosition = () => {
                 requestAnimationFrame(() => {
-                  window.scrollTo({ top: savedScrollY, left: 0, behavior: \"auto\" });
-                  requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, left: 0, behavior: \"auto\" }));
+                  window.scrollTo({ top: savedScrollY, left: 0, behavior: "auto" });
+                  requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, left: 0, behavior: "auto" }));
                 });
               };
-              success.classList.remove(\"show\");
+              success.classList.remove("show");
               submitButton.disabled = true;
-              submitButton.textContent = \"Sending...\";
+              submitButton.textContent = "Sending...";
               try {
                 const payload = Object.fromEntries(new FormData(form).entries());
-                const response = await fetch(\"/api/inquiry\", { method: \"POST\", headers: { \"Content-Type\": \"application/json\" }, body: JSON.stringify(payload) });
+                const response = await fetch("/api/inquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
                 const result = await response.json().catch(() => ({}));
-                if (!response.ok) throw new Error(result.error || \"We could not send your inquiry.\");
-                success.textContent = result.message || \"Thanks — your inquiry was sent successfully. R&J Productions will get back to you soon.\";
-                success.classList.add(\"show\");
+                if (!response.ok) throw new Error(result.error || "We could not send your inquiry.");
+                success.textContent = result.message || "Thanks — your inquiry was sent successfully. R&J Productions will get back to you soon.";
+                success.classList.add("show");
                 form.reset();
               } catch (error) {
-                success.textContent = error.message || \"Something went wrong. Please try again or contact R&J Productions directly.\";
-                success.classList.add(\"show\");
+                success.textContent = error.message || "Something went wrong. Please try again or contact R&J Productions directly.";
+                success.classList.add("show");
               } finally {
                 submitButton.disabled = false;
                 submitButton.textContent = defaultButtonText;
@@ -65,35 +66,37 @@ jobs:
             });
           }
 
-          """
+          '''
 
           text = text[:start] + replacement + text[end:]
 
-          if 'robustSubmitInstalled' not in text:
-            fallback = r"""<script>
+          # Remove any previously injected fallback script, including malformed versions.
+          text = re.sub(r'<script>\s*\(\(\) => \{\s*const forms = document\.querySelectorAll\("#contactForm,#vendorForm"\);.*?</script>\s*', '', text, flags=re.S)
+
+          fallback = r'''<script>
           (() => {
-            const forms = document.querySelectorAll(\"#contactForm,#vendorForm\");
+            const forms = document.querySelectorAll("#contactForm,#vendorForm");
             forms.forEach(form => {
-              if (form.dataset.robustSubmitInstalled === \"1\") return;
-              form.dataset.robustSubmitInstalled = \"1\";
-              form.addEventListener(\"submit\", async event => {
+              if (form.dataset.robustSubmitInstalled === "1") return;
+              form.dataset.robustSubmitInstalled = "1";
+              form.addEventListener("submit", async event => {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                const success = document.getElementById(form.id === \"contactForm\" ? \"contactSuccess\" : \"vendorSuccess\");
-                const button = form.querySelector('button[type=\"submit\"]');
-                const originalText = button ? button.textContent : \"Send Message\";
+                const success = document.getElementById(form.id === "contactForm" ? "contactSuccess" : "vendorSuccess");
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button ? button.textContent : "Send Message";
                 const savedScrollY = window.scrollY;
-                const restore = () => requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, left: 0, behavior: \"auto\" }));
-                if (success) success.classList.remove(\"show\");
-                if (button) { button.disabled = true; button.textContent = \"Sending...\"; }
+                const restore = () => requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, left: 0, behavior: "auto" }));
+                if (success) success.classList.remove("show");
+                if (button) { button.disabled = true; button.textContent = "Sending..."; }
                 try {
-                  const response = await fetch(\"/api/inquiry\", { method: \"POST\", headers: { \"Content-Type\": \"application/json\" }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+                  const response = await fetch("/api/inquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
                   const result = await response.json().catch(() => ({}));
-                  if (!response.ok) throw new Error(result.error || \"We could not send your message.\");
-                  if (success) { success.textContent = result.message || \"Thanks — your message was sent successfully. R&J Productions will get back to you soon.\"; success.classList.add(\"show\"); }
+                  if (!response.ok) throw new Error(result.error || "We could not send your message.");
+                  if (success) { success.textContent = result.message || "Thanks — your message was sent successfully. R&J Productions will get back to you soon."; success.classList.add("show"); }
                   form.reset();
                 } catch (error) {
-                  if (success) { success.textContent = error.message || \"Unable to send your message right now.\"; success.classList.add(\"show\"); }
+                  if (success) { success.textContent = error.message || "Unable to send your message right now."; success.classList.add("show"); }
                 } finally {
                   if (button) { button.disabled = false; button.textContent = originalText; }
                   restore();
@@ -102,8 +105,8 @@ jobs:
             });
           })();
           </script>
-          """
-            text = text.replace('</body>', fallback + '</body>', 1)
+          '''
+          text = text.replace('</body>', fallback + '</body>', 1)
 
           path.write_text(text, encoding='utf-8')
           PY
@@ -116,6 +119,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No change needed."
           else
-            git commit -m "Add fallback form submit handler [skip ci]"
+            git commit -m "Fix fallback form handler quoting [skip ci]"
             git push origin main
           fi
