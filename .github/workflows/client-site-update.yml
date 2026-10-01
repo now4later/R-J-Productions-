@@ -1,0 +1,46 @@
+name: Client Website Content Update
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+
+      - name: Update R&J Productions content
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+
+          html = html.replace('W Entertainment dba R&amp;J Productions', 'JW Entertainment dba R&amp;J Productions LLC')
+          html = html.replace('W Entertainment — dba R&amp;J Productions', 'JW Entertainment — dba R&amp;J Productions LLC')
+          html = html.replace('R&amp;J Productions / W Entertainment', 'R&amp;J Productions LLC / JW Entertainment')
+
+          old_heading = '<div class="eyebrow">PHOTO HIGHLIGHTS</div><h2>A few strong moments.</h2><p>A short, curated set of R&amp;J Productions performance and community photos.</p>'
+          new_heading = '<div class="eyebrow">THE CONCERT ARCHIVE</div><h2>The Concert Archive</h2><p>A collection of R&amp;J Productions performances, festivals, and memorable community moments.</p><div class="past-grid" style="margin-bottom:32px;"><article class="past-card"><div class="past-body"><div class="eyebrow">2026 FESTIVAL</div><h3>2026 Missouri Wine &amp; Jazz Festival</h3><div class="past-meta">Sunday, July 12, 2026 · 18th &amp; Vine Historic Jazz District · Kansas City, MO</div><p class="past-quote">R&amp;J Productions was part of the 2026 Missouri Wine &amp; Jazz Festival on Sunday, July 12. The day featured the R&amp;J Playerz Band and international jazz great Najee, making it a memorable celebration of live music and community.</p><div class="past-links"><span style="color:var(--gold);font-size:.85rem;font-weight:700;">Featured artist: Najee</span></div></div></article></div>'
+
+          if old_heading not in html:
+              raise SystemExit('Expected photo highlights heading was not found; no changes made.')
+
+          html = html.replace(old_heading, new_heading, 1)
+          path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Commit website update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Update client business name and concert archive"
+          git push
