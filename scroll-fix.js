@@ -39,6 +39,26 @@
     heroInner.insertBefore(logo, heroInner.firstChild);
   }
 
+  function addSingerPhoto() {
+    const highlights = document.querySelector('#highlights');
+    if (!highlights || highlights.querySelector('[data-rj-singer-photo]')) return;
+    const tile = document.createElement('article');
+    tile.className = 'tile';
+    tile.setAttribute('data-rj-singer-photo', 'true');
+    tile.innerHTML = '<div class="ph" style="background:#090812;"><img src="/rj-singer.svg" alt="R&J Playerz lead vocalist performing live at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;"></div>';
+    highlights.insertBefore(tile, highlights.firstChild);
+  }
+
+  function addNewVideo() {
+    const videoGrid = document.querySelector('#videoGrid');
+    if (!videoGrid || videoGrid.querySelector('[data-rj-new-video]')) return;
+    const tile = document.createElement('article');
+    tile.className = 'video-tile reveal';
+    tile.setAttribute('data-rj-new-video', 'true');
+    tile.innerHTML = '<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/Etj9OGCZz8U" title="R&J Productions Live Performance — Blue Room" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-title">R&J Productions Live Performance — Blue Room</div>';
+    videoGrid.appendChild(tile);
+  }
+
   function applyClientUpdates() {
     const concerts = document.querySelector('#concerts .soon-panel');
     if (concerts) {
@@ -76,6 +96,9 @@
       document.head.appendChild(style);
       videos.parentNode.insertBefore(section, videos);
     }
+
+    addSingerPhoto();
+    addNewVideo();
   }
 
   document.addEventListener('submit', savePosition, true);
