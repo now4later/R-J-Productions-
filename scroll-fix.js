@@ -65,7 +65,7 @@
       const section = document.createElement('section');
       section.className = 'section band-dark';
       section.id = 'band';
-      section.innerHTML = '<div class="wrap"><div class="section-head"><div class="eyebrow">R&amp;J PLAYERZ BAND</div><h2>Meet the band.</h2><p>The talented musicians and performers who bring the R&amp;J Playerz sound to the stage.</p></div><div class="lineup"><article class="ph"><div class="ph-label"><b>Adriene McGinnis</b>Lead Vocals</div></article><article class="ph"><div class="ph-label"><b>Taylor Johnson</b>Lead Guitar</div></article><article class="ph"><div class="ph-label"><b>Joe Kingcannon Jr.</b>Bass</div></article><article class="ph"><div class="ph-label"><b>Matthew Fields</b>Keyboards · “Bumpy”</div></article><article class="ph"><div class="ph-label"><b>Joseph Wakefield</b>Sax / Keys / Vocals · “Red”</div></article></div></div>';
+      section.innerHTML = '<div class="wrap"><div class="section-head"><div class="eyebrow">R&amp;J PLAYERZ BAND</div><h2>Meet the band.</h2><p>The talented musicians and performers who bring the R&amp;J Playerz sound to the stage.</p></div><div class="lineup"><div class="ph-label"><b>Adriene McGinnis</b>Lead Vocals</div><div class="ph-label"><b>Taylor Johnson</b>Lead Guitar</div><div class="ph-label"><b>Joe Kingcannon Jr.</b>Bass</div><div class="ph-label"><b>Matthew Fields</b>Keyboards · “Bumpy”</div><div class="ph-label"><b>Joseph Wakefield</b>Sax / Keys / Vocals · “Red”</div></div></div>';
       videos.parentNode.insertBefore(section, videos);
     }
   }
