@@ -1,0 +1,80 @@
+name: Apply R&J client updates
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-client-updates.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply requested website updates
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+
+          old_concert = '''<div class="soon-panel reveal"><div class="icon" aria-hidden="true">🎷</div><h2>New concert dates will be announced soon.</h2><p>Check back for upcoming free community events, live music, entertainment, and more. Dates, locations, performers, and event information will be posted here once confirmed.</p><div class="soon-fields"><div class="soon-field">📅 Date — To be announced</div><div class="soon-field">⏰ Time — To be announced</div><div class="soon-field">📍 Location — To be announced</div><div class="soon-field">🎤 Performers — To be announced</div></div><a href="#contact" class="btn btn-gold">Check Back for Updates</a></div>'''
+          new_concert = '''<div class="soon-panel reveal"><div class="icon" aria-hidden="true">🎷</div><div class="eyebrow">NEXT BLUE ROOM PERFORMANCE</div><h2>R&amp;J Productions at The Blue Room</h2><p>Join R&amp;J Productions for the next live performance at The Blue Room. Bring your family, friends, and neighbors for an evening of music, laughter, and community.</p><div class="soon-fields"><div class="soon-field">📅 Friday, December 18, 2026</div><div class="soon-field">⏰ 8:30 PM — 11:00 PM</div><div class="soon-field">📍 The Blue Room · Kansas City, MO</div><div class="soon-field">🎤 R&amp;J Playerz Band</div></div><a href="#contact" class="btn btn-gold">Contact R&amp;J Productions</a></div>'''
+          if old_concert not in html:
+              raise SystemExit('Concert panel target not found')
+          html = html.replace(old_concert, new_concert, 1)
+
+          old_about = '''<p>R&amp;J Productions — JW Entertainment dba R&amp;J Productions LLC — is dedicated to bringing quality, family-friendly entertainment to our community through free live concerts.</p><p>R&amp;J Productions has hosted four free outdoor Summer Concert Series events and plans to host four additional free public concerts during upcoming spring and fall seasons.</p><p>Through donations and sponsorships, R&amp;J Productions can continue providing accessible entertainment opportunities that support local talent and vendors and create memorable experiences.</p>'''
+          new_about = '''<p>R&amp;J Productions — W Entertainment dba R&amp;J Productions LLC — is dedicated to bringing quality, family-friendly entertainment to our community through free live concerts.</p><p>R&amp;J Productions has hosted four free outdoor Summer Concert Series events and plans to host four additional free public concerts during upcoming spring and fall seasons.</p><p>Through donations and sponsorships, R&amp;J Productions can continue providing accessible entertainment opportunities that support local talent and vendors and create memorable experiences.</p><p>Our goal is to create a safe, welcoming environment where families, friends, and neighbors can come together to enjoy music, laughter, and community spirit!</p><p><strong>For further information, please call <a href="tel:7852213720">785-221-3720</a> for Rhonda. She is our Manager.</strong></p>'''
+          if old_about not in html:
+              raise SystemExit('About target not found')
+          html = html.replace(old_about, new_about, 1)
+
+          old_contact = '''<div class="reveal"><div class="eyebrow">CONTACT</div><h2 style="margin:10px 0 24px;font-size:clamp(2rem,4.5vw,2.9rem);">Let's talk.</h2><p style="color:var(--text-muted);">Have a question about concerts, vendors, sponsorships, donations, or R&amp;J Productions? Send us a message and we'll get back to you.</p></div>'''
+          new_contact = '''<div class="reveal"><div class="eyebrow">CONTACT</div><h2 style="margin:10px 0 24px;font-size:clamp(2rem,4.5vw,2.9rem);">Let's talk.</h2><p style="color:var(--text-muted);">Have a question about concerts, vendors, sponsorships, donations, or R&amp;J Productions? Send us a message and we'll get back to you.</p><p style="margin-top:18px;color:var(--text-muted);"><strong style="color:var(--text);">Manager:</strong> Rhonda · <a href="tel:7852213720" style="color:var(--gold);font-weight:700;">785-221-3720</a></p></div>'''
+          if old_contact not in html:
+              raise SystemExit('Contact target not found')
+          html = html.replace(old_contact, new_contact, 1)
+
+          old_footer = '''<div class="footer-brand">R&amp;J PRODUCTIONS<p>JW Entertainment dba R&amp;J Productions LLC. Free live concerts, family-friendly entertainment, and community.</p></div>'''
+          new_footer = '''<div class="footer-brand">R&amp;J PRODUCTIONS<p>W Entertainment dba R&amp;J Productions LLC. Free live concerts, family-friendly entertainment, and community.</p></div>'''
+          if old_footer not in html:
+              raise SystemExit('Footer brand target not found')
+          html = html.replace(old_footer, new_footer, 1)
+
+          old_thanks = '''<div class="footer-thanks">Thank you from<b>🎷 JW Entertainment — dba R&amp;J Productions LLC</b></div>'''
+          new_thanks = '''<div class="footer-thanks">Thank you from<b>🎷W Entertainment — dba R&amp;J Productions LLC</b></div>'''
+          if old_thanks not in html:
+              raise SystemExit('Footer thanks target not found')
+          html = html.replace(old_thanks, new_thanks, 1)
+
+          old_about_nav = '<li><a href="#band">R&amp;J Playerz</a></li>'
+          if old_about_nav not in html:
+              raise SystemExit('Band nav target not found')
+
+          band_section = '''
+    <section class="section band-dark" id="band"><div class="wrap"><div class="section-head reveal"><div class="eyebrow">R&amp;J PLAYERZ BAND</div><h2>Meet the band.</h2><p>The talented musicians and performers who bring the R&amp;J Playerz sound to the stage.</p></div><div class="lineup reveal"><article class="ph"><div class="ph-label"><b>Adriene McGinnis</b>Lead Vocals</div></article><article class="ph"><div class="ph-label"><b>Taylor Johnson</b>Lead Guitar</div></article><article class="ph"><div class="ph-label"><b>Joe Kingcannon Jr.</b>Bass</div></article><article class="ph"><div class="ph-label"><b>Matthew Fields</b>Keyboards · “Bumpy”</div></article><article class="ph"><div class="ph-label"><b>Joseph Wakefield</b>Sax / Keys / Vocals · “Red”</div></article></div></div></section>'''
+
+          marker = '    <section class="section band-dark" id="videos">'
+          if 'id="band"' not in html:
+              if marker not in html:
+                  raise SystemExit('Video section marker not found')
+              html = html.replace(marker, band_section + '\n' + marker, 1)
+
+          path.write_text(html, encoding='utf-8')
+
+      - name: Commit site updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && echo "No changes needed" && exit 0
+          git commit -m "Update R&J site with client requests"
+          git push
