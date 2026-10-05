@@ -45,7 +45,7 @@
     const tile = document.createElement('article');
     tile.className = 'tile';
     tile.setAttribute('data-rj-singer-photo', 'true');
-    tile.innerHTML = '<div class="ph" style="background:#090812;"><img src="/rj-singer.svg" alt="R&J Playerz lead vocalist performing live at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;"></div>';
+    tile.innerHTML = '<div class="ph" style="background:#090812;aspect-ratio:320/230;min-height:0;"><img src="/rj-singer.svg" alt="R&J Playerz lead vocalist performing live at The Blue Room" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;"></div>';
     highlights.insertBefore(tile, highlights.firstChild);
   }
 
