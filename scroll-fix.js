@@ -19,7 +19,7 @@
       if (!Number.isFinite(y)) return;
       sessionStorage.removeItem(KEY);
       pendingY = y;
-      [0, 50, 150, 300, 600, 1000].forEach(ms => setTimeout(() => window.scrollTo({ top: y, left: 0, behavior: 'auto' }), ms));
+      [0, 50, 150, 300, 600, 1000].forEach(ms => setTimeout(() => window.scrollTo({ top: 0 + y, left: 0, behavior: 'auto' }), ms));
     } catch (_) {}
   }
 
@@ -39,13 +39,13 @@
       const paragraphs = about.querySelectorAll('p');
       if (paragraphs[0]) paragraphs[0].innerHTML = 'R&amp;J Productions — W Entertainment dba R&amp;J Productions LLC — is dedicated to bringing quality, family-friendly entertainment to our community through free live concerts.';
       if (![...paragraphs].some(p => p.textContent.includes('Our goal is to create a safe, welcoming environment'))) {
-        about.insertAdjacentHTML('beforeend', '<p>Our goal is to create a safe, welcoming environment where families, friends, and neighbors can come together to enjoy music, laughter, and community spirit!</p><p><strong>For further information, please call <a href="tel:7852213720">785-221-3720</a> for Rhonda. She is our Manager.</strong></p>');
+        about.insertAdjacentHTML('beforeend', '<p>Our goal is to create a safe, welcoming environment where families, friends, and neighbors can come together to enjoy music, laughter, and community spirit!</p><p><strong>For further information, please call <a href="tel:7852213720" style="white-space:nowrap;display:inline-block;">785-221-3720</a> for Rhonda. She is our Manager.</strong></p>');
       }
     }
 
     const contact = document.querySelector('#contact .contact-grid > .reveal');
     if (contact && !contact.querySelector('[data-rj-manager]')) {
-      contact.insertAdjacentHTML('beforeend', '<p data-rj-manager style="margin-top:18px;color:var(--text-muted);"><strong style="color:var(--text);">Manager:</strong> Rhonda · <a href="tel:7852213720" style="color:var(--gold);font-weight:700;">785-221-3720</a></p>');
+      contact.insertAdjacentHTML('beforeend', '<p data-rj-manager style="margin-top:18px;color:var(--text-muted);"><strong style="color:var(--text);">Manager:</strong> Rhonda · <a href="tel:7852213720" style="color:var(--gold);font-weight:700;white-space:nowrap;display:inline-block;">785-221-3720</a></p>');
     }
 
     const footerBrand = document.querySelector('.footer-brand p');
