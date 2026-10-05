@@ -7,11 +7,7 @@
     if (!(form instanceof HTMLFormElement)) return;
     pendingY = window.scrollY || window.pageYOffset || 0;
     try { sessionStorage.setItem(KEY, String(pendingY)); } catch (_) {}
-
-    const restore = () => {
-      if (typeof pendingY !== 'number') return;
-      window.scrollTo({ top: pendingY, left: 0, behavior: 'auto' });
-    };
+    const restore = () => { if (typeof pendingY === 'number') window.scrollTo({ top: pendingY, left: 0, behavior: 'auto' }); };
     [0, 50, 150, 300, 600, 1000].forEach(ms => setTimeout(restore, ms));
   }
 
@@ -23,9 +19,7 @@
       if (!Number.isFinite(y)) return;
       sessionStorage.removeItem(KEY);
       pendingY = y;
-      [0, 50, 150, 300, 600, 1000].forEach(ms => setTimeout(() => {
-        window.scrollTo({ top: y, left: 0, behavior: 'auto' });
-      }, ms));
+      [0, 50, 150, 300, 600, 1000].forEach(ms => setTimeout(() => window.scrollTo({ top: y, left: 0, behavior: 'auto' }), ms));
     } catch (_) {}
   }
 
@@ -65,22 +59,16 @@
       const section = document.createElement('section');
       section.className = 'section band-dark';
       section.id = 'band';
-      section.innerHTML = '<div class="wrap"><div class="section-head"><div class="eyebrow">R&amp;J PLAYERZ BAND</div><h2>Meet the band.</h2><p>The talented musicians and performers who bring the R&amp;J Playerz sound to the stage.</p></div><div class="lineup"><div class="ph-label"><b>Adriene McGinnis</b>Lead Vocals</div><div class="ph-label"><b>Taylor Johnson</b>Lead Guitar</div><div class="ph-label"><b>Joe Kingcannon Jr.</b>Bass</div><div class="ph-label"><b>Matthew Fields</b>Keyboards · “Bumpy”</div><div class="ph-label"><b>Joseph Wakefield</b>Sax / Keys / Vocals · “Red”</div></div></div>';
+      section.innerHTML = '<div class="wrap"><div class="section-head"><div class="eyebrow">R&amp;J PLAYERZ BAND</div><h2>Meet the band.</h2><p>The talented musicians and performers who bring the R&amp;J Playerz sound to the stage.</p></div><div class="rj-lineup"><article><div class="rj-icon">🎤</div><div><b>Adriene McGinnis</b><span>Lead Vocals</span></div></article><article><div class="rj-icon">🎸</div><div><b>Taylor Johnson</b><span>Lead Guitar</span></div></article><article><div class="rj-icon">🎸</div><div><b>Joe Kingcannon Jr.</b><span>Bass</span></div></article><article><div class="rj-icon">🎹</div><div><b>Matthew Fields “Bumpy”</b><span>Keyboards</span></div></article><article><div class="rj-icon">🎷</div><div><b>Joseph Wakefield “Red”</b><span>Sax · Keys · Vocals</span></div></article></div></div>';
+      const style = document.createElement('style');
+      style.textContent = '.rj-lineup{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:32px}.rj-lineup article{display:flex;align-items:center;gap:18px;padding:22px 24px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));transition:transform .2s ease,border-color .2s ease}.rj-lineup article:hover{transform:translateY(-3px);border-color:var(--gold)}.rj-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.08);font-size:25px;flex:none}.rj-lineup b{display:block;font-size:1.08rem;color:var(--text)}.rj-lineup span{display:block;margin-top:5px;color:var(--gold);font-size:.88rem;font-weight:700;letter-spacing:.04em}.rj-lineup article:last-child{grid-column:1/-1;max-width:calc(50% - 8px)}@media(max-width:700px){.rj-lineup{grid-template-columns:1fr}.rj-lineup article:last-child{grid-column:auto;max-width:none}}';
+      document.head.appendChild(style);
       videos.parentNode.insertBefore(section, videos);
     }
   }
 
   document.addEventListener('submit', savePosition, true);
   window.addEventListener('pageshow', restoreOnLoad);
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      restoreOnLoad();
-      removeSponsorButton();
-      applyClientUpdates();
-    }, { once: true });
-  } else {
-    restoreOnLoad();
-    removeSponsorButton();
-    applyClientUpdates();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { restoreOnLoad(); removeSponsorButton(); applyClientUpdates(); }, { once: true });
+  else { restoreOnLoad(); removeSponsorButton(); applyClientUpdates(); }
 })();
