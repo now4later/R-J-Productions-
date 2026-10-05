@@ -28,6 +28,17 @@
     if (button) button.remove();
   }
 
+  function addRjLogo() {
+    const heroInner = document.querySelector('.hero-inner');
+    if (!heroInner || heroInner.querySelector('[data-rj-logo]')) return;
+    const logo = document.createElement('img');
+    logo.src = '/rj-logo.svg';
+    logo.alt = 'R&J Productions logo';
+    logo.setAttribute('data-rj-logo', 'true');
+    logo.style.cssText = 'width:min(230px,55vw);height:auto;margin:0 0 24px;border-radius:50%;box-shadow:0 16px 45px rgba(0,0,0,.28);';
+    heroInner.insertBefore(logo, heroInner.firstChild);
+  }
+
   function applyClientUpdates() {
     const concerts = document.querySelector('#concerts .soon-panel');
     if (concerts) {
@@ -69,6 +80,6 @@
 
   document.addEventListener('submit', savePosition, true);
   window.addEventListener('pageshow', restoreOnLoad);
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { restoreOnLoad(); removeSponsorButton(); applyClientUpdates(); }, { once: true });
-  else { restoreOnLoad(); removeSponsorButton(); applyClientUpdates(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { restoreOnLoad(); removeSponsorButton(); addRjLogo(); applyClientUpdates(); }, { once: true });
+  else { restoreOnLoad(); removeSponsorButton(); addRjLogo(); applyClientUpdates(); }
 })();
