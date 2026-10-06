@@ -1,1 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc"><title id="title">R&amp;J Productions</title><desc id="desc">Red circular R&amp;J Productions logo with JW Entertainment LLC branding and saxophone.</desc><defs><path id="top" d="M120 400a280 280 0 0 1 560 0"/><path id="bottom" d="M120 400a280 280 0 0 0 560 0"/></defs><circle cx="400" cy="400" r="320" fill="#d91f26" stroke="#090909" stroke-width="8"/><text fill="#080808" font-family="Georgia,serif" font-size="42" font-weight="700" letter-spacing="1"><textPath href="#top" startOffset="50%" text-anchor="middle">JW ENTERTAINMENT LLC</textPath></text><text x="400" y="335" text-anchor="middle" fill="#080808" font-family="cursive" font-size="110" font-style="italic">R&amp;J</text><text x="400" y="405" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="44" font-weight="700">🎷 JW</text><g fill="none" stroke="#080808" stroke-width="7" stroke-linecap="round"><path d="M135 430 C250 380 310 475 420 415 S590 380 665 450"/><path d="M135 450 C250 400 310 495 420 435 S590 400 665 470"/><path d="M135 470 C250 420 310 515 420 455 S590 420 665 490"/><path d="M135 490 C250 440 310 535 420 475 S590 440 665 510"/></g><g fill="#080808"><ellipse cx="190" cy="453" rx="20" ry="14" transform="rotate(-20 190 453)"/><path d="M208 448v-75h8v75z"/><ellipse cx="300" cy="470" rx="20" ry="14" transform="rotate(-20 300 470)"/><path d="M318 465v-88h8v88z"/><ellipse cx="435" cy="445" rx="21" ry="14" transform="rotate(-20 435 445)"/><path d="M454 440v-100h8v100z"/><ellipse cx="560" cy="425" rx="21" ry="14" transform="rotate(-20 560 425)"/><path d="M579 420v-100h8v100z"/><ellipse cx="630" cy="475" rx="20" ry="14" transform="rotate(-20 630 475)"/><path d="M648 470v-88h8v88z"/></g><text x="400" y="650" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="48" font-weight="700">PRODUCTIONS</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+<title id="title">R&amp;J Productions — JW Entertainment LLC</title>
+<desc id="desc">Clean red circular R&amp;J Productions logo with JW Entertainment LLC branding and a saxophone.</desc>
+<defs>
+  <path id="top" d="M135 400a265 265 0 0 1 530 0"/>
+</defs>
+<circle cx="400" cy="400" r="320" fill="#d91f26" stroke="#090909" stroke-width="8"/>
+<text fill="#080808" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="2">
+  <textPath href="#top" startOffset="50%" text-anchor="middle">JW ENTERTAINMENT LLC</textPath>
+</text>
+
+<text x="400" y="350" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="112" font-style="italic">R&amp;J</text>
+
+<!-- Simple saxophone mark -->
+<g transform="translate(290 375)" fill="none" stroke="#c99a2e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M45 8v78c0 35 18 54 48 54h10c26 0 43 15 43 38 0 20-13 34-34 34h-20"/>
+  <path d="M45 8h38"/>
+  <path d="M116 198c-13 0-22 8-22 19 0 11 9 19 22 19 18 0 31-11 31-27"/>
+  <path d="M70 55h36M70 78h36"/>
+</g>
+<text x="490" y="500" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="48" font-weight="700">JW</text>
+
+<!-- Music staff -->
+<g fill="none" stroke="#080808" stroke-width="6" stroke-linecap="round">
+  <path d="M145 535 C245 505 315 565 400 535 S565 505 655 545"/>
+  <path d="M145 551 C245 521 315 581 400 551 S565 521 655 561"/>
+  <path d="M145 567 C245 537 315 597 400 567 S565 537 655 577"/>
+</g>
+<g fill="#080808">
+  <ellipse cx="210" cy="542" rx="15" ry="10" transform="rotate(-18 210 542)"/>
+  <ellipse cx="335" cy="570" rx="15" ry="10" transform="rotate(-18 335 570)"/>
+  <ellipse cx="475" cy="540" rx="15" ry="10" transform="rotate(-18 475 540)"/>
+  <ellipse cx="590" cy="545" rx="15" ry="10" transform="rotate(-18 590 545)"/>
+</g>
+
+<text x="400" y="650" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="46" font-weight="700" letter-spacing="1">PRODUCTIONS</text>
+</svg>
