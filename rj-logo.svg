@@ -1,52 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
 <title id="title">R&amp;J Productions — JW Entertainment LLC</title>
-<desc id="desc">Red circular R&amp;J Productions logo with a clearly visible gold saxophone and JW Entertainment LLC branding.</desc>
+<desc id="desc">Red circular R&amp;J Productions logo with JW Entertainment LLC branding and saxophone emoji.</desc>
 <defs><path id="top" d="M135 400a265 265 0 0 1 530 0"/></defs>
-
 <circle cx="400" cy="400" r="320" fill="#d91f26" stroke="#090909" stroke-width="8"/>
-
 <text fill="#080808" font-family="Georgia,serif" font-size="34" font-weight="700" letter-spacing="2">
   <textPath href="#top" startOffset="50%" text-anchor="middle">JW ENTERTAINMENT LLC</textPath>
 </text>
-
 <text x="400" y="340" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="108" font-style="italic">R&amp;J</text>
+<text x="400" y="435" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="48" font-weight="700">🎷 JW</text>
 
-<!-- Clearly recognizable gold saxophone -->
-<g fill="none" stroke="#d2a52e" stroke-linecap="round" stroke-linejoin="round">
-  <!-- mouthpiece + neck -->
-  <path d="M285 380 C310 370 340 372 360 386 C375 396 380 410 380 428" stroke-width="14"/>
-  <path d="M285 380 L270 375" stroke-width="8"/>
-  <!-- sax body and bow -->
-  <path d="M380 420 L380 515 C380 545 405 560 435 555 C465 550 480 530 480 500 L480 445" stroke-width="24"/>
-  <!-- bell -->
-  <path d="M480 445 L480 405" stroke-width="20"/>
-  <path d="M465 405 Q480 385 510 390 L535 405 Q510 425 480 420" stroke-width="12" fill="#d2a52e"/>
-  <!-- octave/key rods -->
-  <path d="M365 430 L365 510" stroke-width="5"/>
-  <path d="M395 435 L395 520" stroke-width="5"/>
-</g>
-
-<!-- Sax keys -->
-<g fill="#080808">
-  <circle cx="365" cy="448" r="7"/><circle cx="365" cy="472" r="7"/>
-  <circle cx="365" cy="496" r="7"/><circle cx="395" cy="455" r="7"/>
-  <circle cx="395" cy="480" r="7"/><circle cx="395" cy="505" r="7"/>
-</g>
-
-<text x="555" y="500" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="50" font-weight="700">JW</text>
-
-<!-- Music staff -->
 <g fill="none" stroke="#080808" stroke-width="6" stroke-linecap="round">
-  <path d="M145 570 C245 540 315 600 400 570 S565 540 655 580"/>
-  <path d="M145 586 C245 556 315 616 400 586 S565 556 655 596"/>
-  <path d="M145 602 C245 572 315 632 400 602 S565 572 655 612"/>
+  <path d="M145 520 C245 490 315 550 400 520 S565 490 655 530"/>
+  <path d="M145 536 C245 506 315 566 400 536 S565 506 655 546"/>
+  <path d="M145 552 C245 522 315 582 400 552 S565 522 655 562"/>
 </g>
 <g fill="#080808">
-  <ellipse cx="210" cy="577" rx="15" ry="10" transform="rotate(-18 210 577)"/>
-  <ellipse cx="335" cy="605" rx="15" ry="10" transform="rotate(-18 335 605)"/>
-  <ellipse cx="475" cy="575" rx="15" ry="10" transform="rotate(-18 475 575)"/>
-  <ellipse cx="590" cy="580" rx="15" ry="10" transform="rotate(-18 590 580)"/>
+  <ellipse cx="210" cy="527" rx="15" ry="10" transform="rotate(-18 210 527)"/>
+  <ellipse cx="335" cy="555" rx="15" ry="10" transform="rotate(-18 335 555)"/>
+  <ellipse cx="475" cy="525" rx="15" ry="10" transform="rotate(-18 475 525)"/>
+  <ellipse cx="590" cy="530" rx="15" ry="10" transform="rotate(-18 590 530)"/>
 </g>
-
-<text x="400" y="665" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="44" font-weight="700" letter-spacing="1">PRODUCTIONS</text>
+<text x="400" y="650" text-anchor="middle" fill="#080808" font-family="Georgia,serif" font-size="46" font-weight="700" letter-spacing="1">PRODUCTIONS</text>
 </svg>
